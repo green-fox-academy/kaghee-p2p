@@ -20,10 +20,13 @@ public class LogEntry {
     String logLevel;
     String requestData;
 
+    public LogEntry() {
+    }
+
     public LogEntry(String path, String method, String logLevel, String requestData) {
         this.path = path;
         this.method = method;
-        this.dateAndTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss.SS"));
+        this.dateAndTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss.SSS"));
         this.logLevel = logLevel;
         this.requestData = requestData;
     }
@@ -31,7 +34,7 @@ public class LogEntry {
     public LogEntry(String path, String method, String logLevel) {
         this.path = path;
         this.method = method;
-        this.dateAndTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss.SS"));
+        this.dateAndTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss.SSS"));
         this.logLevel = logLevel;
         this.requestData = "";
     }
