@@ -25,4 +25,6 @@ public class ChatAppController {
         model.addAttribute("list", list);
         return "home";
     }
+
+    //hellobello
 }
