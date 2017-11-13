@@ -4,10 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Entity
 public class LogEntry {
@@ -31,7 +29,7 @@ public class LogEntry {
         this.requestData = requestData;
     }
 
-    public LogEntry(String path, String method, String logLevel) {
+    public LogEntry(String path, String method, String logLevel) {      // ha nincs semmi request param
         this.path = path;
         this.method = method;
         this.dateAndTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss.SSS"));
