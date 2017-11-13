@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -21,20 +22,12 @@ public class LogEntry {
     public LogEntry() {
     }
 
-    public LogEntry(String path, String method, String logLevel, String requestData) {
-        this.path = path;
-        this.method = method;
+    public LogEntry(HttpServletRequest request) {
+        this.path = request.getRequestURI();
+        this.method = request.getMethod();
         this.dateAndTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss.SSS"));
-        this.logLevel = logLevel;
-        this.requestData = requestData;
-    }
-
-    public LogEntry(String path, String method, String logLevel) {      // ha nincs semmi request param
-        this.path = path;
-        this.method = method;
-        this.dateAndTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss.SSS"));
-        this.logLevel = logLevel;
-        this.requestData = "";
+        this.logLevel = System.getenv("CHAT_APP_LOGLEVEL");
+        this.requestData = request.getQueryString();
     }
 
     public Long getId() {
@@ -83,5 +76,15 @@ public class LogEntry {
 
     public void setRequestData(String requestData) {
         this.requestData = requestData;
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.dateAndTime).append(" ")
+                .append(this.logLevel).append(" ")
+                .append(this.path).append(" ")
+                .append(this.method).append(" ")
+                .append(this.requestData);
+        return sb.toString();
     }
 }

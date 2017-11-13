@@ -8,24 +8,6 @@
 <body>
 <div class="container-fluid">
 <h1>Peer to Peer Chat Program</h1>
-<table class="table table-hover" style="font-size: 18px">
-    <tr>
-        <th>Id</th>
-        <th>Path</th>
-        <th>Method</th>
-        <th>Date and Time</th>
-        <th>Log Level</th>
-        <th>Request Data</th>
-    </tr>
-    <tr th:each="log : ${list}">
-        <td th:text="${log.id}"></td>
-        <td th:text="${log.path}"></td>
-        <td th:text="${log.method}"></td>
-        <td th:text="${log.dateAndTime}"></td>
-        <td th:text="${log.logLevel}"></td>
-        <td th:text="${log.requestData}"></td>
-    </tr>
-</table>
 </div>
 <script src="webjars/jquery/1.11.1/jquery.min.js"></script>
 <script src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
