@@ -7,11 +7,11 @@
 </head>
 <body>
 <div class="container-fluid">
-<h1>Peer to Peer Chat Program</h1>
-<form action="#" method="get">
-    Your username:
-    <input type="text" name="userName" th:placeholder="${currentUser.getUsername()}"/>
-    <input type="submit" value="Update"/>
+<h1>Enter</h1>
+<form th:action="@{/enter/adduser}" method="get">
+    Choose your name:
+    <input type="text" name="userName"/>
+    <input type="submit" value="Enter"/>
 </form>
 </div>
 <script src="webjars/jquery/1.11.1/jquery.min.js"></script>
