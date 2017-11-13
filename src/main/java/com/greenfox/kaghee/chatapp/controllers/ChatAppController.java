@@ -1,6 +1,5 @@
 package com.greenfox.kaghee.chatapp.controllers;
 
-import com.greenfox.kaghee.chatapp.models.LogEntry;
 import com.greenfox.kaghee.chatapp.models.User;
 import com.greenfox.kaghee.chatapp.repos.LogRepo;
 import com.greenfox.kaghee.chatapp.repos.UserRepo;
@@ -12,8 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class ChatAppController {
@@ -38,7 +35,6 @@ public class ChatAppController {
             model.addAttribute("currentUser", userHandler.getCurrentUser());
             return "home";
         }
-
     }
 
     @GetMapping("/enter")
@@ -47,9 +43,24 @@ public class ChatAppController {
     }
 
     @GetMapping("/enter/adduser")
-    public String addUser(HttpServletRequest request, @RequestParam(value = "userName") String username) {
+    public String addUser(HttpServletRequest request, @RequestParam(value = "userName") String username, Model model) {
+        model.addAttribute("name", username);
+        if (username.equals("")) {
+            requestHandler.printError(request);
+            return "enter";
+        }
         userRepo.save(new User(username));
-        userHandler.setCurrentUser(userHandler.findUser(username));
+        userHandler.setCurrentUser(userHandler.getUserByName(username));
         return "redirect:/";
+    }
+
+    @GetMapping("/{id}/update")
+    public String updateUser(@PathVariable(value = "id") Long id, @RequestParam(value = "userName") String username,
+                             HttpServletRequest request, Model model) {
+        requestHandler.printLog(request);
+        userHandler.getCurrentUser().setUsername(username);
+        userRepo.save(userHandler.getCurrentUser());
+        model.addAttribute("currentUser", userHandler.getCurrentUser());
+        return "home";
     }
 }

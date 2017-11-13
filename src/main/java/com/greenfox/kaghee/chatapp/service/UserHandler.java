@@ -20,7 +20,13 @@ public class UserHandler {
         this.currentUser = currentUser;
     }
 
-    public User findUser(String name) {
+    public User getUserByName(String name) {
         return userRepo.findUserByUsername(name);
     }
+
+    public User getUserById(Long id) {
+        return userRepo.findUserById(id);
+    }
+
+
 }

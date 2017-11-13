@@ -8,7 +8,8 @@
 <body>
 <div class="container-fluid">
 <h1>Peer to Peer Chat Program</h1>
-<form action="#" method="get">
+<h3 th:if="${name} == ''">The username field is empty.</h3>
+<form th:action="@{/{id}/update (id=${currentUser.id})}" method="get">
     Your username:
     <input type="text" name="userName" th:placeholder="${currentUser.getUsername()}"/>
     <input type="submit" value="Update"/>
