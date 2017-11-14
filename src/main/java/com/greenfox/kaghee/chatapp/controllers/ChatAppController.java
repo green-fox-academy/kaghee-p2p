@@ -1,6 +1,8 @@
 package com.greenfox.kaghee.chatapp.controllers;
 
+import com.greenfox.kaghee.chatapp.models.Incoming;
 import com.greenfox.kaghee.chatapp.models.Message;
+import com.greenfox.kaghee.chatapp.models.Status;
 import com.greenfox.kaghee.chatapp.models.User;
 import com.greenfox.kaghee.chatapp.repos.LogRepo;
 import com.greenfox.kaghee.chatapp.repos.MessageRepo;
@@ -12,11 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.logging.Logger;
 
 @Controller
 public class ChatAppController {
+//    private static final Logger lgr = Logger.getLogger(ChatAppController.class.getName());
+
     @Autowired
     LogRepo logRepo;
 
@@ -45,11 +51,6 @@ public class ChatAppController {
             model.addAttribute("messages", messageHandler.listMessages());
             return "home";
         }
-    }
-
-    @GetMapping("/enter")
-    public String enter() {
-        return "enter";
     }
 
     @GetMapping("/enter/adduser")
@@ -89,5 +90,17 @@ public class ChatAppController {
         messageHandler.addMessage(new Message(userHandler.getCurrentUser().getUsername(), text));
         requestHandler.printLog(request);
         return "redirect:/";
+    }
+
+    @PostMapping("/api/message/receive")
+    public Status receiveMessage(@RequestBody Incoming incoming) {
+        //if any of the fields are missing, throw a 401, otherwise add msg to database
+        if (incoming.getMessage().getCreatedAt() == null || incoming.getMessage().getText() == null ||
+                incoming.getMessage().getUserName() == null) {
+            return new Status("error","Missing field(s)");
+        } else {
+            messageHandler.addMessage(incoming.getMessage());
+            return new Status("ok");
+        }
     }
 }
