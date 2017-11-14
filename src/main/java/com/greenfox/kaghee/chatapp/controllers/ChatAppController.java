@@ -1,8 +1,11 @@
 package com.greenfox.kaghee.chatapp.controllers;
 
+import com.greenfox.kaghee.chatapp.models.Message;
 import com.greenfox.kaghee.chatapp.models.User;
 import com.greenfox.kaghee.chatapp.repos.LogRepo;
+import com.greenfox.kaghee.chatapp.repos.MessageRepo;
 import com.greenfox.kaghee.chatapp.repos.UserRepo;
+import com.greenfox.kaghee.chatapp.service.MessageHandler;
 import com.greenfox.kaghee.chatapp.service.RequestHandler;
 import com.greenfox.kaghee.chatapp.service.UserHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +24,16 @@ public class ChatAppController {
     UserRepo userRepo;
 
     @Autowired
+    MessageRepo messageRepo;
+
+    @Autowired
     RequestHandler requestHandler;
 
     @Autowired
     UserHandler userHandler;
+
+    @Autowired
+    MessageHandler messageHandler;
 
     @RequestMapping(value="/")
     public String home(HttpServletRequest request, Model model) {
@@ -33,6 +42,8 @@ public class ChatAppController {
             return "enter";
         } else {
             model.addAttribute("currentUser", userHandler.getCurrentUser());
+//            messageHandler.addMessage(new Message("agi","helloka"));
+            model.addAttribute("messages", messageHandler.listMessages());
             return "home";
         }
     }
@@ -58,6 +69,7 @@ public class ChatAppController {
             return "enter";
         } else {
             userHandler.saveUser(username);
+            userHandler.setCurrentUser(userHandler.getUserByName(username));
             requestHandler.printLog(request);
             return "redirect:/";
         }
@@ -71,5 +83,12 @@ public class ChatAppController {
         userRepo.save(userHandler.getCurrentUser());
         model.addAttribute("currentUser", userHandler.getCurrentUser());
         return "home";
+    }
+
+    @GetMapping("/writemessage")
+    public String writeMessage(@RequestParam(value = "text") String text, HttpServletRequest request) {
+        messageHandler.addMessage(new Message(userHandler.getCurrentUser().getUsername(), text));
+        requestHandler.printLog(request);
+        return "redirect:/";
     }
 }

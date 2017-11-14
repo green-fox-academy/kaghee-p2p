@@ -13,6 +13,19 @@
     <input type="text" name="userName" th:placeholder="${currentUser.getUsername()}"/>
     <input type="submit" value="Update"/>
 </form>
+<br/>
+<ul>
+     <li>App<br/>Hi there! Submit your message using the send button!</li>
+</ul>
+<ul style="font-size: 14px" th:each="msg: ${messages}">
+    <li th:text="${msg.userName}"></li>
+    <li style="list-style-type: none" th:text="${msg.text}"></li>
+</ul>
+<br/>
+<form th:action="@{/writemessage}">
+    <textarea name="text" rows="5" cols="50" placeholder="Write your message here"></textarea>
+    <input type="submit" value="Send"/>
+</form>
 </div>
 <script src="webjars/jquery/1.11.1/jquery.min.js"></script>
 <script src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
