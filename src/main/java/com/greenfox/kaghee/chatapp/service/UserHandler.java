@@ -28,5 +28,9 @@ public class UserHandler {
         return userRepo.findUserById(id);
     }
 
+    public void saveUser(String username) {
+        userRepo.save(new User(username));
+        currentUser = getUserByName(username);
+    }
 
 }

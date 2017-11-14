@@ -44,14 +44,23 @@ public class ChatAppController {
 
     @GetMapping("/enter/adduser")
     public String addUser(HttpServletRequest request, @RequestParam(value = "userName") String username, Model model) {
+        String warning = "";
         model.addAttribute("name", username);
         if (username.equals("")) {
+            warning = "The username field is empty!";
+            model.addAttribute("noUser", warning);
             requestHandler.printError(request);
             return "enter";
+        } else if (userRepo.findUserByUsername(username) != null) {
+            warning = "This username already exists in the database.";
+            model.addAttribute("noUser", warning);
+            requestHandler.printError(request);
+            return "enter";
+        } else {
+            userHandler.saveUser(username);
+            requestHandler.printLog(request);
+            return "redirect:/";
         }
-        userRepo.save(new User(username));
-        userHandler.setCurrentUser(userHandler.getUserByName(username));
-        return "redirect:/";
     }
 
     @GetMapping("/{id}/update")

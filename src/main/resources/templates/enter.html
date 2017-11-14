@@ -8,6 +8,7 @@
 <body>
 <div class="container-fluid">
 <h1>Enter</h1>
+<h3 th:text="${noUser}"></h3>
 <form th:action="@{/enter/adduser}" method="get">
     Choose your name:
     <input type="text" name="userName"/>
