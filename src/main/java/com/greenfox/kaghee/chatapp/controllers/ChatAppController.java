@@ -42,7 +42,6 @@ public class ChatAppController {
             return "enter";
         } else {
             model.addAttribute("currentUser", userHandler.getCurrentUser());
-//            messageHandler.addMessage(new Message("agi","helloka"));
             model.addAttribute("messages", messageHandler.listMessages());
             return "home";
         }
