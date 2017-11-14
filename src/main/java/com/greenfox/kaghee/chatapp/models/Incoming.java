@@ -1,7 +1,5 @@
 package com.greenfox.kaghee.chatapp.models;
 
-import javax.persistence.Id;
-
 public class Incoming {
     Message message;
     Client client;

@@ -91,16 +91,4 @@ public class ChatAppController {
         requestHandler.printLog(request);
         return "redirect:/";
     }
-
-    @PostMapping("/api/message/receive")
-    public Status receiveMessage(@RequestBody Incoming incoming) {
-        //if any of the fields are missing, throw a 401, otherwise add msg to database
-        if (incoming.getMessage().getCreatedAt() == null || incoming.getMessage().getText() == null ||
-                incoming.getMessage().getUserName() == null) {
-            return new Status("error","Missing field(s)");
-        } else {
-            messageHandler.addMessage(incoming.getMessage());
-            return new Status("ok");
-        }
-    }
 }

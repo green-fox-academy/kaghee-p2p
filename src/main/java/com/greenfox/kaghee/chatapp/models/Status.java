@@ -1,7 +1,12 @@
 package com.greenfox.kaghee.chatapp.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Status {
     String status;
+    @JsonIgnore
     String message;
 
     public Status(String status) {
@@ -9,13 +14,11 @@ public class Status {
     }
 
     public Status(String status, String message) {
-
         this.status = status;
         this.message = message;
     }
 
     public String getStatus() {
-
         return status;
     }
 
