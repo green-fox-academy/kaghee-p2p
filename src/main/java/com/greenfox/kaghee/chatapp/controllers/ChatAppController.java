@@ -1,9 +1,6 @@
 package com.greenfox.kaghee.chatapp.controllers;
 
-import com.greenfox.kaghee.chatapp.models.Incoming;
 import com.greenfox.kaghee.chatapp.models.Message;
-import com.greenfox.kaghee.chatapp.models.Status;
-import com.greenfox.kaghee.chatapp.models.User;
 import com.greenfox.kaghee.chatapp.repos.LogRepo;
 import com.greenfox.kaghee.chatapp.repos.MessageRepo;
 import com.greenfox.kaghee.chatapp.repos.UserRepo;
@@ -14,10 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.logging.Logger;
 
 @Controller
 public class ChatAppController {
@@ -62,7 +57,7 @@ public class ChatAppController {
             model.addAttribute("noUser", warning);
             requestHandler.printError(request);
             return "enter";
-        } else if (userRepo.findUserByUsername(username) != null) {
+        } else if (userRepo.findUserByUserName(username) != null) {
             warning = "This username already exists in the database.";
             model.addAttribute("noUser", warning);
             requestHandler.printError(request);
@@ -79,7 +74,7 @@ public class ChatAppController {
     public String updateUser(@PathVariable(value = "id") Long id, @RequestParam(value = "userName") String username,
                              HttpServletRequest request, Model model) {
         requestHandler.printLog(request);
-        userHandler.getCurrentUser().setUsername(username);
+        userHandler.getCurrentUser().setUserName(username);
         userRepo.save(userHandler.getCurrentUser());
         model.addAttribute("currentUser", userHandler.getCurrentUser());
         return "home";
@@ -87,7 +82,7 @@ public class ChatAppController {
 
     @GetMapping("/writemessage")
     public String writeMessage(@RequestParam(value = "text") String text, HttpServletRequest request) {
-        messageHandler.addMessage(new Message(userHandler.getCurrentUser().getUsername(), text));
+        messageHandler.addMessage(new Message(userHandler.getCurrentUser().getUserName(), text));
         requestHandler.printLog(request);
         return "redirect:/";
     }

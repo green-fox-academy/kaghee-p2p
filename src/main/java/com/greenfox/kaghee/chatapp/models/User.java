@@ -8,13 +8,13 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
-    String username;
+    String userName;
 
     public User() {
     }
 
-    public User(String username) {
-        this.username = username;
+    public User(String userName) {
+        this.userName = userName;
     }
 
     public Long getId() {
@@ -25,11 +25,11 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

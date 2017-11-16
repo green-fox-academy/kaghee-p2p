@@ -1,7 +1,6 @@
 package com.greenfox.kaghee.chatapp.models;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -10,20 +9,20 @@ import java.time.LocalDateTime;
 public class Message {
     @Id
     long id;
-    String userName;
+    String username;
     String text;
-    Timestamp createdAt;
+    Timestamp timestamp;
 
-    public Message(String userName, String text) {
+    public Message(String username, String text) {
         this.id = (int)(Math.random() * 9999999 + 1000000);
-        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
-        this.userName = userName;
+        this.timestamp = Timestamp.valueOf(LocalDateTime.now());
+        this.username = username;
         this.text = text;
     }
 
     public Message() {
         this.id = (int)(Math.random() * 9999999 + 1000000);
-        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
+        this.timestamp = Timestamp.valueOf(LocalDateTime.now());
     }
 
     public Long getId() {
@@ -34,12 +33,12 @@ public class Message {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return this.username;
     }
 
-    public void setUserName(String user) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getText() {
@@ -50,11 +49,11 @@ public class Message {
         this.text = text;
     }
 
-    public Timestamp getCreatedAt() {
-        return createdAt;
+    public Timestamp getTimestamp() {
+        return timestamp;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 }

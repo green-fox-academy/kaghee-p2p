@@ -2,11 +2,12 @@ package com.greenfox.kaghee.chatapp.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Status {
     String status;
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.NON_EMPTY)
     String message;
 
     public Status(String status) {

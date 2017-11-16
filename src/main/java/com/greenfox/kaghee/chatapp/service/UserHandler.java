@@ -21,7 +21,7 @@ public class UserHandler {
     }
 
     public User getUserByName(String name) {
-        return userRepo.findUserByUsername(name);
+        return userRepo.findUserByUserName(name);
     }
 
     public User getUserById(Long id) {

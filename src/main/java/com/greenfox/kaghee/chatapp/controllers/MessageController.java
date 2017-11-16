@@ -1,15 +1,14 @@
 package com.greenfox.kaghee.chatapp.controllers;
 
+import com.greenfox.kaghee.chatapp.models.Client;
 import com.greenfox.kaghee.chatapp.models.Incoming;
 import com.greenfox.kaghee.chatapp.models.Message;
 import com.greenfox.kaghee.chatapp.models.Status;
-import com.greenfox.kaghee.chatapp.repos.MessageRepo;
 import com.greenfox.kaghee.chatapp.service.MessageHandler;
-import com.greenfox.kaghee.chatapp.service.RequestHandler;
-import com.greenfox.kaghee.chatapp.service.UserHandler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 public class MessageController {
@@ -19,9 +18,8 @@ public class MessageController {
     @PostMapping("/api/message/receive")
     @CrossOrigin("*")
     public Status receiveMessage(@RequestBody Incoming incoming) {
-        //if any of the fields are missing, throw a 401, otherwise add msg to database
-        if (incoming.getMessage().getCreatedAt() == null || incoming.getMessage().getText() == null ||
-                incoming.getMessage().getUserName() == null) {
+        if (incoming.getMessage().getTimestamp() == null || incoming.getMessage().getText() == null ||
+                incoming.getMessage().getUsername() == null) {
             return new Status("error","Missing field(s)");
         } else {
             messageHandler.addMessage(incoming.getMessage());
